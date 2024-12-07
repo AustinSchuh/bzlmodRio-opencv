@@ -2,7 +2,7 @@ load("@rules_java//java:defs.bzl", "java_import")
 
 java_import(
     name = "opencv",
-    jars = ["@edu_wpi_first_thirdparty_frc2024_opencv_opencv_java//jar:file"],
+    jars = ["@edu_wpi_first_thirdparty_frc2025_opencv_opencv_java//jar:file"],
     visibility = ["//visibility:public"],
     deps = [
         "@bzlmodrio-opencv//libraries/cpp/opencv:jni",

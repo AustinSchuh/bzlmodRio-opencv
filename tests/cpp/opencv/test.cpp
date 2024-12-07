@@ -1,7 +1,7 @@
 
+#include "gtest/gtest.h"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-#include "gtest/gtest.h"
 
 TEST(BasicTest, Basic) {
   // Make basic API calls
@@ -9,5 +9,5 @@ TEST(BasicTest, Basic) {
 
   cv::Mat imgThresholded;
   cv::inRange(imgHSV, cv::Scalar(0, 0, 0), cv::Scalar(255, 255, 255),
-              imgThresholded); // Threshold the image
+              imgThresholded);  // Threshold the image
 }

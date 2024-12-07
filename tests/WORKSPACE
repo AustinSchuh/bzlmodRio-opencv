@@ -54,8 +54,8 @@ maven_install(
 
 http_archive(
     name = "rules_wpi_styleguide",
-    sha256 = "0359cc1772a715d958a2f5648f8254ad8c34af1e84d1a852f3bfa79040334b76",
-    url = "https://github.com/bzlmodRio/rules_wpi_styleguide/releases/download/2024.06.22/rules_wpi_styleguide-2024.06.22.tar.gz",
+    sha256 = "b8215443ef1a6cc8170bc76203e44f22516614c58935e22c6a94b63656e2c88a",
+    url = "https://github.com/bzlmodRio/rules_wpi_styleguide/releases/download/2024.11.19/rules_wpi_styleguide-2024.11.19.tar.gz",
 )
 
 load("@rules_wpi_styleguide//dependencies:load_rule_dependencies.bzl", "load_styleguide_rule_dependencies")
@@ -81,8 +81,8 @@ load_styleguide_pins()
 
 http_archive(
     name = "rules_bzlmodrio_jdk",
-    sha256 = "36cd468c867817ec460d76c28ec0ccd2d9fac4a2cf966af3935243a8a4a08108",
-    url = "https://github.com/wpilibsuite/rules_bzlmodRio_jdk/releases/download/17.0.8-7/rules_bzlmodRio_jdk-17.0.8-7.tar.gz",
+    sha256 = "81869fe9860e39b17e4a9bc1d33c1ca2faede7e31d9538ed0712406f753a2163",
+    url = "https://github.com/wpilibsuite/rules_bzlmodRio_jdk/releases/download/17.0.12-7/rules_bzlmodRio_jdk-17.0.12-7.tar.gz",
 )
 
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
