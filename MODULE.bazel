@@ -1,13 +1,13 @@
 module(
     name = "bzlmodrio-opencv",
-    version = "2025.4.10.0-2",
+    version = "2025.4.10.0-3",
     compatibility_level = 2025,
 )
 
 bazel_dep(name = "platforms", version = "0.0.9")
 bazel_dep(name = "rules_cc", version = "0.0.9")
 bazel_dep(name = "rules_java", version = "7.6.5")
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr1")
 
 setup_bzlmodrio_opencv_cpp_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_bzlmodrio_opencv_cpp_dependencies")
 use_repo(
@@ -41,6 +41,10 @@ use_repo(
     "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversaldebug",
     "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversalstatic",
     "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversalstaticdebug",
+    "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxx86-64",
+    "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxx86-64debug",
+    "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxx86-64static",
+    "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxx86-64staticdebug",
     "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_sources",
     "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64",
     "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64debug",

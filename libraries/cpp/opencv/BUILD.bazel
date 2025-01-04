@@ -13,20 +13,12 @@ alias(
 alias(
     name = "static",
     actual = "@bzlmodrio-opencv//private/cpp/opencv:static",
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_raspi32:raspi32": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "shared",
     actual = "@bzlmodrio-opencv//private/cpp/opencv:shared",
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_raspi32:raspi32": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//visibility:public"],
 )
 
