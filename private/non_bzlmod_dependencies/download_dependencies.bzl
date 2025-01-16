@@ -26,8 +26,8 @@ def download_dependencies():
     # Roborio Toolchain
     http_archive(
         name = "rules_bzlmodrio_toolchains",
-        sha256 = "559ff5ddc402dca6266a765770c3a65db23e2060c45355c57612737bcc592b78",
-        url = "https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/releases/download/2025-1.bcr1/rules_bzlmodRio_toolchains-2025-1.bcr1.tar.gz",
+        sha256 = "ff25b5f9445cbd43759be4c6582b987d1065cf817c593eedc7ada1a699298c84",
+        url = "https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/releases/download/2025-1.bcr2/rules_bzlmodRio_toolchains-2025-1.bcr2.tar.gz",
     )
 
     ########################
