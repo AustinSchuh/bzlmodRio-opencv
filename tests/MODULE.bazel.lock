@@ -39,6 +39,9 @@
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_android/0.1.1/source.json": "e6986b41626ee10bdc864937ffb6d6bf275bb5b9c65120e6137d56e6331f089e",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.14/MODULE.bazel": "e4004326cab72e5b27b697a01b03139276ac04c6e7c177ddb9424afc8709e51b",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.14/source.json": "7da669bc69d497942a9ac21b8f76c05f4a91b4212e3a697a1e27d9358576e995",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_toolchains/2025-1.bcr2/MODULE.bazel": "c7db765cb7d20fd06b2c14768736ee4f7078c864fe6e85d2075f819b998e463f",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_toolchains/2025-1.bcr2/source.json": "4f010895f72782b63b4f351fb13e340b87a3db1372a204361072c4e75900aa36",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_toolchains/2025-1/MODULE.bazel": "81e540a541aac221fc84fc24124b8e5d07e2eff75942f44e67510c56794a5f22",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.1/MODULE.bazel": "cb2aa0747f84c6c3a78dad4e2049c154f08ab9d166b1273835a8174940365647",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.2/MODULE.bazel": "6915987c90970493ab97393024c156ea8fb9f3bea953b2f3ec05c34f19b5695c",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.6/MODULE.bazel": "abf360251023dfe3efcef65ab9d56beefa8394d4176dd29529750e1c57eaa33f",
@@ -126,7 +129,7 @@
     "@@bzlmodrio-opencv~//:maven_cpp_deps.bzl%setup_bzlmodrio_opencv_cpp_dependencies": {
       "general": {
         "bzlTransitiveDigest": "kmiXrZrHq7vGj8WmcQNpi8WxZtKfNjwaTpmlC1p3Q0g=",
-        "usagesDigest": "mAP4cxp7apQKc/irj3rRnf+z+XnE+ck5LSbmkYfIG3c=",
+        "usagesDigest": "EOHfI1pKQml5623UxmzwPgRw9aVCpbyBNOyOBFEm0k8=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -558,7 +561,7 @@
     "@@bzlmodrio-opencv~//:maven_java_deps.bzl%setup_bzlmodrio_opencv_java_dependencies": {
       "general": {
         "bzlTransitiveDigest": "2ZwamkH+VmDdy0ue/dFtUt2+KSm4F7hFiMHm4FMd8N4=",
-        "usagesDigest": "3VfqoJcXXNNpSsnV19Ta57hg2z6NXTwByjqQNkQbHsk=",
+        "usagesDigest": "u1zlrHr7W0xUsa34BZRszxcaV47+Nt328abemoTC1hY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -745,7 +748,7 @@
     "@@rules_bzlmodrio_toolchains~//:extensions.bzl%sh_configure": {
       "general": {
         "bzlTransitiveDigest": "FSzzLax1FSAilvZicvnhrjs+SiDm3CUZEJoKp8eiL2s=",
-        "usagesDigest": "ZuybEXe3p64B/EeVUmrfjvXGd60Ad75CUCRBRLEbeLs=",
+        "usagesDigest": "estpE0SIh78lAlsetfALSWciUMyLq4APRv53fHY0Ukw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
