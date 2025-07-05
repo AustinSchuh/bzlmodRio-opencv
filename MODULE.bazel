@@ -1,13 +1,14 @@
 module(
     name = "bzlmodrio-opencv",
-    version = "2025.4.10.0-3.bcr2",
+    version = "2025.4.10.0-3.bcr4",
     compatibility_level = 2025,
 )
 
 bazel_dep(name = "platforms", version = "0.0.9")
-bazel_dep(name = "rules_cc", version = "0.0.9")
-bazel_dep(name = "rules_java", version = "7.6.5")
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr2")
+bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "rules_java", version = "8.11.0")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr4")
+bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.12-7.bcr1")
 
 setup_bzlmodrio_opencv_cpp_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_bzlmodrio_opencv_cpp_dependencies")
 use_repo(
