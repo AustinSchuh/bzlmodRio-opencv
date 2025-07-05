@@ -65,6 +65,11 @@
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_android/0.1.1/source.json": "e6986b41626ee10bdc864937ffb6d6bf275bb5b9c65120e6137d56e6331f089e",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.14/MODULE.bazel": "e4004326cab72e5b27b697a01b03139276ac04c6e7c177ddb9424afc8709e51b",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.14/source.json": "7da669bc69d497942a9ac21b8f76c05f4a91b4212e3a697a1e27d9358576e995",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_jdk/17.0.12-7.bcr1/MODULE.bazel": "2576b58a2b7393ac789a679ea56cb51c6100e8fb09a9b47ca99904ab7e254c06",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_jdk/17.0.12-7.bcr1/source.json": "261c3de3cc7d8e1c9f56b6fce87e3e5c256a81e08750568829fce92b9ad690e9",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_toolchains/2025-1.bcr4/MODULE.bazel": "5747793f9d36d55ecab212b1af2f4292fbf4dafed00ee5d4b09e726d5eb68773",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_toolchains/2025-1.bcr4/source.json": "902458d8876a65fc58a7707c9fd4a0727165d16e906084cecfae980d53fcc0cb",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bzlmodrio_toolchains/2025-1/MODULE.bazel": "81e540a541aac221fc84fc24124b8e5d07e2eff75942f44e67510c56794a5f22",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.1/MODULE.bazel": "cb2aa0747f84c6c3a78dad4e2049c154f08ab9d166b1273835a8174940365647",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.10/MODULE.bazel": "ec1705118f7eaedd6e118508d3d26deba2a4e76476ada7e0e3965211be012002",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.13/MODULE.bazel": "0e8529ed7b323dad0775ff924d2ae5af7640b23553dfcd4d34344c7e7a867191",
@@ -591,8 +596,8 @@
     },
     "@@rules_bzlmodrio_jdk+//:maven_deps.bzl%deps": {
       "general": {
-        "bzlTransitiveDigest": "7R3SL78hBPdCduLTpBexAEUt8zk53USlu3Xy/SZC7H4=",
-        "usagesDigest": "077bD25ReoYwcXi/YMRPYj+3pT1wG/BoL1QL3mUFYFE=",
+        "bzlTransitiveDigest": "UswhzTzRPFiolyqclNrWIRFeYlGVQ1clL55obKcuUJ4=",
+        "usagesDigest": "5aZZ8BASB0FXaKJ6+q0nZAVWQ+7VeeY2oNXRWXsGIRM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -614,6 +619,23 @@
               "build_file": "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"roboriojdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    target_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux//:jdk\",\n)\ntoolchain(\n    name = \"bootstrap_runtime_toolchain\",\n    # These constraints are not required for correctness, but prevent fetches of remote JDK for\n    # different architectures. As every Java compilation toolchain depends on a bootstrap runtime in\n    # the same configuration, this constraint will not result in toolchain resolution failures.\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:bootstrap_runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux//:jdk\",\n)\n"
             }
           },
+          "roboriojdk_linux_arm32": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "build_file_content": "load(\"@rules_java//java/toolchains:java_runtime.bzl\", \"java_runtime\")\n\npackage(default_visibility = [\"//visibility:public\"])\n\nexports_files([\"WORKSPACE\", \"BUILD.bazel\"])\n\nfilegroup(\n    name = \"jre\",\n    srcs = glob(\n        [\n            \"jre/bin/**\",\n            \"jre/lib/**\",\n        ],\n        allow_empty = True,\n        # In some configurations, Java browser plugin is considered harmful and\n        # common antivirus software blocks access to npjp2.dll interfering with Bazel,\n        # so do not include it in JRE on Windows.\n        exclude = [\"jre/bin/plugin2/**\"],\n    ),\n)\n\nfilegroup(\n    name = \"jdk-bin\",\n    srcs = glob(\n        [\"bin/**\"],\n        # The JDK on Windows sometimes contains a directory called\n        # \"%systemroot%\", which is not a valid label.\n        exclude = [\"**/*%*/**\"],\n    ),\n)\n\n# This folder holds security policies.\nfilegroup(\n    name = \"jdk-conf\",\n    srcs = glob(\n        [\"conf/**\"],\n        allow_empty = True,\n    ),\n)\n\nfilegroup(\n    name = \"jdk-include\",\n    srcs = glob(\n        [\"include/**\"],\n        allow_empty = True,\n    ),\n)\n\nfilegroup(\n    name = \"jdk-lib\",\n    srcs = glob(\n        [\"lib/**\", \"release\"],\n        allow_empty = True,\n        exclude = [\n            \"lib/missioncontrol/**\",\n            \"lib/visualvm/**\",\n        ],\n    ),\n)\n\njava_runtime(\n    name = \"jdk\",\n    srcs = [\n        \":jdk-bin\",\n        \":jdk-conf\",\n        \":jdk-include\",\n        \":jdk-lib\",\n        \":jre\",\n    ],\n    # Provide the 'java` binary explicitly so that the correct path is used by\n    # Bazel even when the host platform differs from the execution platform.\n    # Exactly one of the two globs will be empty depending on the host platform.\n    # When --incompatible_disallow_empty_glob is enabled, each individual empty\n    # glob will fail without allow_empty = True, even if the overall result is\n    # non-empty.\n    java = glob([\"bin/java.exe\", \"bin/java\"], allow_empty = True)[0],\n    version = 17,\n)\n\nfilegroup(\n    name = \"jdk-jmods\",\n    srcs = glob(\n        [\"jmods/**\"],\n        allow_empty = True,\n    ),\n)\n\njava_runtime(\n    name = \"jdk-with-jmods\",\n    srcs = [\n        \":jdk-bin\",\n        \":jdk-conf\",\n        \":jdk-include\",\n        \":jdk-lib\",\n        \":jdk-jmods\",\n        \":jre\",\n    ],\n    java = glob([\"bin/java.exe\", \"bin/java\"], allow_empty = True)[0],\n    version = 17,\n)\n",
+              "sha256": "ce7873ebf40ed0eb1089941ead4d3af79a205b1264f3162860d26ae957572b74",
+              "urls": [
+                "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_arm_linux_hotspot_17.0.12_7.tar.gz"
+              ],
+              "strip_prefix": "jdk-17.0.12+7"
+            }
+          },
+          "roboriojdk_linux_arm32_toolchain_config_repo": {
+            "repoRuleId": "@@rules_java+//toolchains:remote_java_repository.bzl%_toolchain_config",
+            "attributes": {
+              "build_file": "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"roboriojdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    target_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:armv7\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux_arm32//:jdk\",\n)\ntoolchain(\n    name = \"bootstrap_runtime_toolchain\",\n    # These constraints are not required for correctness, but prevent fetches of remote JDK for\n    # different architectures. As every Java compilation toolchain depends on a bootstrap runtime in\n    # the same configuration, this constraint will not result in toolchain resolution failures.\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:armv7\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:bootstrap_runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux_arm32//:jdk\",\n)\n"
+            }
+          },
           "roboriojdk_linux_arm64": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
@@ -628,7 +650,7 @@
           "roboriojdk_linux_arm64_toolchain_config_repo": {
             "repoRuleId": "@@rules_java+//toolchains:remote_java_repository.bzl%_toolchain_config",
             "attributes": {
-              "build_file": "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"roboriojdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    target_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:armv7\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux_arm64//:jdk\",\n)\ntoolchain(\n    name = \"bootstrap_runtime_toolchain\",\n    # These constraints are not required for correctness, but prevent fetches of remote JDK for\n    # different architectures. As every Java compilation toolchain depends on a bootstrap runtime in\n    # the same configuration, this constraint will not result in toolchain resolution failures.\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:armv7\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:bootstrap_runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux_arm64//:jdk\",\n)\n"
+              "build_file": "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"roboriojdk_17\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"17\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    target_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:arm64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux_arm64//:jdk\",\n)\ntoolchain(\n    name = \"bootstrap_runtime_toolchain\",\n    # These constraints are not required for correctness, but prevent fetches of remote JDK for\n    # different architectures. As every Java compilation toolchain depends on a bootstrap runtime in\n    # the same configuration, this constraint will not result in toolchain resolution failures.\n    exec_compatible_with = [\"@platforms//os:linux\", \"@platforms//cpu:arm64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:bootstrap_runtime_toolchain_type\",\n    toolchain = \"@roboriojdk_linux_arm64//:jdk\",\n)\n"
             }
           },
           "roboriojdk_mac": {
@@ -673,19 +695,7 @@
               "urls": [
                 "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_x64_windows_hotspot_17.0.12_7.zip"
               ],
-              "strip_prefix": "jdk-17.0.12+7",
-              "patch_cmds": [
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/concrt140.dll bin/concrt140.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/msvcp140.dll bin/msvcp140.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/msvcp140_1.dll bin/msvcp140_1.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/msvcp140_2.dll bin/msvcp140_2.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/msvcp140_atomic_wait.dll bin/msvcp140_atomic_wait.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/msvcp140_codecvt_ids.dll bin/msvcp140_codecvt_ids.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/vccorlib140.dll bin/vccorlib140.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/vcruntime140.dll bin/vcruntime140.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/vcruntime140_1.dll bin/vcruntime140_1.dll",
-                "cp ../rules_bzlmodrio_jdk+/msvc_runtime/vcruntime140_threads.dll bin/vcruntime140_threads.dll"
-              ]
+              "strip_prefix": "jdk-17.0.12+7"
             }
           },
           "roboriojdk_windows_toolchain_config_repo": {
@@ -696,11 +706,6 @@
           }
         },
         "recordedRepoMappingEntries": [
-          [
-            "rules_bzlmodrio_jdk+",
-            "rules_bzlmodrio_jdk",
-            "rules_bzlmodrio_jdk+"
-          ],
           [
             "rules_bzlmodrio_jdk+",
             "rules_java",
@@ -716,8 +721,8 @@
     },
     "@@rules_bzlmodrio_toolchains+//:extensions.bzl%sh_configure": {
       "general": {
-        "bzlTransitiveDigest": "8asfDpytFImZW8dzgP3tkiqxhYEL2ULs9VRv0o8STOg=",
-        "usagesDigest": "XIWgJiSkUqY+lM6yHnulZR4jhfgjag7rP7+5tCV7Q0g=",
+        "bzlTransitiveDigest": "znAfQPH+PP/xmq1YA1rIBbw/js8K6hK1jKsLaRzVh5A=",
+        "usagesDigest": "dEAgr7NGa2sxjW5hfzcn2luyOqdcg1kSFoVzCS5/J3w=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
