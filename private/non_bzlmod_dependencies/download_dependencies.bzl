@@ -49,5 +49,11 @@ def download_dependencies():
 
     ########################
     # bzlmodRio dependencies
+    http_archive(
+        name = "rules_bzlmodrio_jdk",
+        integrity = "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
+        strip_prefix = "rules_bzlmodrio_jdk-4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773",
+        urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773.tar.gz"],
+    )
 
     ########################

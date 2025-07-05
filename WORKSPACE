@@ -35,6 +35,10 @@ load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 
 rules_jvm_external_setup()
 
+load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
+
+setup_legacy_setup_jdk_dependencies()
+
 load("@bzlmodrio-opencv//private/non_bzlmod_dependencies:setup_dependencies.bzl", "setup_dependencies")
 
 setup_dependencies()

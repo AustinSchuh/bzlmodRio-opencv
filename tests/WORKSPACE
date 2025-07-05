@@ -49,6 +49,10 @@ load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 
 rules_jvm_external_setup()
 
+load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
+
+setup_legacy_setup_jdk_dependencies()
+
 load("@bzlmodrio-opencv//private/non_bzlmod_dependencies:setup_dependencies.bzl", "setup_dependencies")
 
 setup_dependencies()
@@ -109,14 +113,3 @@ load("@rules_wpi_styleguide//dependencies:load_pins.bzl", "load_styleguide_pins"
 
 load_styleguide_pins()
 #####################
-
-http_archive(
-    name = "rules_bzlmodrio_jdk",
-    integrity = "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
-    strip_prefix = "rules_bzlmodrio_jdk-4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773",
-    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773.tar.gz"],
-)
-
-load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
-
-setup_legacy_setup_jdk_dependencies()
