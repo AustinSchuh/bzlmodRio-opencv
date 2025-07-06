@@ -16,6 +16,16 @@ bazel_dep(name = "rules_wpiformat", version = "2025.33")
 bazel_dep(name = "rules_wpi_styleguide", version = "2025.06.22")
 bazel_dep(name = "rules_spotless", version = "2.40.0.bcr1")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.12-7.bcr1")
+bazel_dep(name = "rules_python", version = "1.5.0-rc2")
+single_version_override(
+    module_name = "rules_python",
+    # The strip level for the patch (usually 1 for git diff patches)
+    patch_strip = 1,
+    # Path to your patch file (relative to your workspace root)
+    patches = ["@//:python_windows.patch"],
+    # The version of the module you are patching
+    version = "1.5.0-rc2",
+)
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(

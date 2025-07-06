@@ -1,0 +1,158 @@
+diff --git a/examples/multi_python_versions/MODULE.bazel b/examples/multi_python_versions/MODULE.bazel
+index 4e4a0473..eeb1dfc8 100644
+--- a/examples/multi_python_versions/MODULE.bazel
++++ b/examples/multi_python_versions/MODULE.bazel
+@@ -35,6 +35,7 @@ use_repo(
+ 
+ pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+ use_repo(pip, "pypi")
++
+ pip.parse(
+     hub_name = "pypi",
+     python_version = "3.9",
+diff --git a/examples/pip_parse_vendored/BUILD.bazel b/examples/pip_parse_vendored/BUILD.bazel
+index 8d81e4ba..74b92863 100644
+--- a/examples/pip_parse_vendored/BUILD.bazel
++++ b/examples/pip_parse_vendored/BUILD.bazel
+@@ -3,6 +3,7 @@ load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+ load("@bazel_skylib//rules:write_file.bzl", "write_file")
+ load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+ load("@rules_python//python:py_test.bzl", "py_test")
++load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+ load("//:requirements.bzl", "all_data_requirements", "all_requirements", "all_whl_requirements", "requirement")
+ 
+ # This rule adds a convenient way to update the requirements.txt
+diff --git a/python/versions.bzl b/python/versions.bzl
+index 44af7baf..24719567 100644
+--- a/python/versions.bzl
++++ b/python/versions.bzl
+@@ -467,17 +467,18 @@ TOOL_VERSIONS = {
+         "strip_prefix": "python",
+     },
+     "3.11.13": {
+-        "url": "20250610/cpython-{python_version}+20250610-{platform}-{build}.tar.gz",
++        "url": "20250702/cpython-{python_version}+20250702-{platform}-{build}.tar.gz",
+         "sha256": {
+-            "aarch64-apple-darwin": "365037494ba4f53563c22292e49a8e4d0d495bcb6534fca9666bdd1b474abf36",
+-            "aarch64-unknown-linux-gnu": "a5954f147e87d9bff3d9733ebb3e74fe997eec5b38eaf5cb4429038228962a16",
+-            "ppc64le-unknown-linux-gnu": "9214126866418f290fda88832fa3e244630f918ebc8a4a9ee15ba922e9c98afd",
+-            "riscv64-unknown-linux-gnu": "fd99008c3123f50ec2ad407c5c1e17c1a86590daaf88dae8e6f1fd28f099b7c2",
+-            "s390x-unknown-linux-gnu": "e27ab1fff8bf9e507677252a03ed524c685a8629b56475e26ab6dd0f88465179",
+-            "x86_64-apple-darwin": "b49044115a545e67d73f5265a613a25da7c9523431281aa7b94691f1013355af",
+-            "x86_64-pc-windows-msvc": "c0f89e3776211147817d54084fa046e2603571e18ff2ae4a4a8ff84ca4f7defc",
+-            "x86_64-unknown-linux-gnu": "d93a7699505ee0ac7dec0f09324ffb19a31cce3066a287bb1fe95285ce3ea0c7",
+-            "x86_64-unknown-linux-musl": "499121bb917e5baeeb954f76bdbce36bb63af579ff1530966ae2280e8d812c5b",
++            "aarch64-apple-darwin": "01167ac2c7336ff48a96e8dba30d92f29822a98e5ef27959178498b5a0de61da",
++            "aarch64-unknown-linux-gnu": "42c99f013117255edcbe7a367694941f1ac096fd9e9a7d7c0d18d09551181930",
++            "ppc64le-unknown-linux-gnu": "154ad77f7f552ab5f2ae07446eaccf6651db85db7403388c4439c6e43139d05e",
++            "riscv64-unknown-linux-gnu": "e800cd1651bf2ce0be28541377228258fbe9a9a1fe87633d5fc8c6cb47262525",
++            "s390x-unknown-linux-gnu": "5c6ce40240d92d9a3af4d49364205ce57bd4e73ba5274abcd3f20b85a0a88df9",
++            "x86_64-apple-darwin": "b5955f7a951f8aa8755b35a1b3175968fc2b4bff54b9edffc6225c791305c4e6",
++            "x86_64-pc-windows-msvc": "b68b7314e15f5d479acce2e9385a47f6ed978edc838dbb104175db889b349818",
++            "aarch64-pc-windows-msvc": "ea81e436ac20b894f2070468f3323e69d4cb1a0e4e12bc14bb702a861f7a323d",
++            "x86_64-unknown-linux-gnu": "e04944e70637f9d82022c9a41ae31de306b0d5bbd3fb64b9eb3261b8b5e0b30c",
++            "x86_64-unknown-linux-musl": "69aeea0c21b994874d8481c39b9ba2683cbc7f6ec9cff964e1ea821f5ae4fc31",
+         },
+         "strip_prefix": "python",
+     },
+@@ -590,17 +591,18 @@ TOOL_VERSIONS = {
+         "strip_prefix": "python",
+     },
+     "3.12.11": {
+-        "url": "20250610/cpython-{python_version}+20250610-{platform}-{build}.tar.gz",
++        "url": "20250702/cpython-{python_version}+20250702-{platform}-{build}.tar.gz",
+         "sha256": {
+-            "aarch64-apple-darwin": "9c5826a93ddc15e8aa08de1e6e65b3ae0d45ea8eb0c2e9547b80ff4121b870ce",
+-            "aarch64-unknown-linux-gnu": "eb33bc5a87443daf2fd218109df811bc4e4ea5ef9aec4fad75aa55da0258b96f",
+-            "ppc64le-unknown-linux-gnu": "7b90bc528c5ddf30579dec52926d68fa6d5c90b65e24fc185d5fe283fdf0cbd9",
+-            "riscv64-unknown-linux-gnu": "0f3103675102e351762a8fe574eae20335552a246a45a006d2a9ca14ce0952f8",
+-            "s390x-unknown-linux-gnu": "a7ff0432208450ccebd5d328f69b84cc7c25b4af54fbab44803ddb11a2da5028",
+-            "x86_64-apple-darwin": "199631baa35f3747ddfa2f1e28fc062b97ccd15b94a60c9294d4d129a73c9e53",
+-            "x86_64-pc-windows-msvc": "e05fa165841c416d60365ca2216cad570f05ae5d3d027b9ad3beaad0529dd8cc",
+-            "x86_64-unknown-linux-gnu": "77ab3efe5c6637fe8da0fdfbff5de1730c3b824874fe1368917886908b4c517b",
+-            "x86_64-unknown-linux-musl": "9dd768494c4a34abcec316bc4802e957db98ed283024b527c0c40dfefd08b6fe",
++            "aarch64-apple-darwin": "5f8e9480d0981268961e63729de1c9b037cabfe030949943be293f0d3e3e7703",
++            "aarch64-unknown-linux-gnu": "a63c9d7d712ca33e2fc57d9bf3ebf98c8f574f23b3eeeed44faf3b4b08d8a9b8",
++            "aarch64-pc-windows-msvc": "4d3736640d8916da6d69060e90cad607903e4f1d8dc0f284fd475f04f312712e",
++            "ppc64le-unknown-linux-gnu": "76dc3accfc8515fe7e11b5f1af26734bc7c0a075890a9c85dc1c7b6d0421ebbc",
++            "riscv64-unknown-linux-gnu": "d80dd210da941583c3166ff5a762bfd3f3211ecb2968eee8ec497548ef970682",
++            "s390x-unknown-linux-gnu": "a7d0778ae32c1d882eb3354877c31298010cde2107ecf60b7b75dcabe7ddd8ad",
++            "x86_64-apple-darwin": "f7a7a70fc7199cc37fd04bc1375b4cd7f44fb05128965e72b589fe112029cab8",
++            "x86_64-pc-windows-msvc": "19bdfa7362faf6869c376976e0296b597ce2d70e68ea7b357c6f68c79ad9aa9e",
++            "x86_64-unknown-linux-gnu": "0919f8b5311765b4cf1342371724d7bf2a6eaf51f15f5cb2b9ad5fd0ee54271c",
++            "x86_64-unknown-linux-musl": "64308b6133ae57de6d7c84b9caf6b084d1ccabf4b617c8a88a08fa57da66df16",
+         },
+         "strip_prefix": "python",
+     },
+@@ -789,6 +791,7 @@ TOOL_VERSIONS = {
+             "riscv64-unknown-linux-gnu": "python",
+             "x86_64-apple-darwin": "python",
+             "x86_64-pc-windows-msvc": "python",
++            "aarch64-pc-windows-msvc": "python",
+             "x86_64-unknown-linux-gnu": "python",
+             "x86_64-unknown-linux-musl": "python",
+             "aarch64-apple-darwin-freethreaded": "python/install",
+@@ -798,6 +801,7 @@ TOOL_VERSIONS = {
+             "s390x-unknown-linux-gnu-freethreaded": "python/install",
+             "x86_64-apple-darwin-freethreaded": "python/install",
+             "x86_64-pc-windows-msvc-freethreaded": "python/install",
++            "aarch64-pc-windows-msvc-freethreaded": "python/install",
+             "x86_64-unknown-linux-gnu-freethreaded": "python/install",
+         },
+     },
+@@ -827,6 +831,14 @@ def _generate_platforms():
+             os_name = MACOS_NAME,
+             arch = "aarch64",
+         ),
++        "aarch64-pc-windows-msvc": platform_info(
++            compatible_with = [
++                "@platforms//os:windows",
++                "@platforms//cpu:aarch64",
++            ],
++            os_name = WINDOWS_NAME,
++            arch = "aarch64",
++        ),
+         "aarch64-unknown-linux-gnu": platform_info(
+             compatible_with = [
+                 "@platforms//os:linux",
+@@ -988,6 +1000,7 @@ def get_release_info(platform, python_version, base_url = DEFAULT_RELEASE_BASE_U
+                 FREETHREADED.lstrip("-"),
+                 {
+                     "aarch64-apple-darwin": "pgo+lto",
++                    "aarch64-pc-windows-msvc": "pgo",
+                     "aarch64-unknown-linux-gnu": "lto",
+                     "ppc64le-unknown-linux-gnu": "lto",
+                     "riscv64-unknown-linux-gnu": "lto",
+@@ -1073,7 +1086,7 @@ EOF
+ 
+ def _commands_for_version(python_version):
+     return "\n".join([
+-        "echo \"{python_version}: {platform}: $$(curl --location --fail {release_url_sha256} 2>/dev/null || curl --location --fail {release_url} 2>/dev/null | shasum -a 256 | awk '{{ print $$1 }}')\"".format(
++        "echo \"{python_version}: \\\"{platform}\\\": \\\"$$(curl --location --fail {release_url_sha256} 2>/dev/null || curl --location --fail {release_url} 2>/dev/null | shasum -a 256 | awk '{{ print $$1 }}')\\\",\"".format(
+             python_version = python_version,
+             platform = platform,
+             release_url = release_url,
+diff --git a/tests/cc/current_py_cc_libs/BUILD.bazel b/tests/cc/current_py_cc_libs/BUILD.bazel
+index 9269553a..6e523e49 100644
+--- a/tests/cc/current_py_cc_libs/BUILD.bazel
++++ b/tests/cc/current_py_cc_libs/BUILD.bazel
+@@ -12,6 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
++load("@rules_cc//cc:cc_test.bzl", "cc_test")
+ load(":current_py_cc_libs_tests.bzl", "current_py_cc_libs_test_suite")
+ 
+ current_py_cc_libs_test_suite(name = "current_py_cc_libs_tests")
+diff --git a/tests/support/cc_toolchains/BUILD.bazel b/tests/support/cc_toolchains/BUILD.bazel
+index f6e6654d..5320628f 100644
+--- a/tests/support/cc_toolchains/BUILD.bazel
++++ b/tests/support/cc_toolchains/BUILD.bazel
+@@ -12,6 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
+ load("@rules_cc//cc/toolchains:cc_toolchain.bzl", "cc_toolchain")
+ load("@rules_cc//cc/toolchains:cc_toolchain_suite.bzl", "cc_toolchain_suite")
+ load("@rules_testing//lib:util.bzl", "PREVENT_IMPLICIT_BUILDING_TAGS")
