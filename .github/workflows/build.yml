@@ -19,7 +19,7 @@ jobs:
 
         # Build bzlmod, native
         - { name: "windows     - bzlmod native", os: windows-2022,   java_arch: "x64",     command: "test",   config: "--enable_bzlmod --config=windows",     bazel_options: "--output_user_root=C:\\bazelroot", }
-        - { name: "windows arm - bzlmod native", os: windows-11-arm, java_arch: "aarch64", command: "build",  config: "--enable_bzlmod --config=windows_arm", bazel_options: "--output_user_root=C:\\bazelroot", }
+        - { name: "windows arm - bzlmod native", os: windows-11-arm, java_arch: "aarch64", command: "build",  config: "--enable_bzlmod --config=windows_arm --toolchain_resolution_debug='@@bazel_tools//tools/python:toolchain_type'", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu      - bzlmod native", os: ubuntu-22.04,   java_arch: "x64",     command: "test",   config: "--enable_bzlmod --config=linux",       bazel_options: "",                                 }
         - { name: "macos       - bzlmod native", os: macos-14,       java_arch: "aarch64", command: "test",   config: "--enable_bzlmod --config=macos",       bazel_options: "",                                 }
 
