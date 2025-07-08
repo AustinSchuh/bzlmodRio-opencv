@@ -8,31 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@stable
-  wpiformat:
-    name: "wpiformat"
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Fetch main
-        run: |
-            git branch -f main origin/main
-        if: github.ref != 'refs/heads/main'
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - name: Install clang-format
-        run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo sh -c "echo 'deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-14 main' >> /etc/apt/sources.list.d/proposed-repositories.list"
-          sudo apt-get update -q
-          sudo apt-get install -y clang-format-14
-      - run: bazel run --noenable_bzlmod @rules_wpiformat//wpiformat -- -f ..
-        working-directory: tests
-        if: github.ref != 'refs/heads/main'
-
-      - name: Check Output
-        run: git --no-pager diff --exit-code HEAD
   buildifier:
     name: "buildifier"
     runs-on: ubuntu-22.04
