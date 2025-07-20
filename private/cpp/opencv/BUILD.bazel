@@ -1,4 +1,5 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+load("//private/cpp/opencv:wrapped_cc_import.bzl", "opencv_libraries")
 
 alias(
     name = "header_files",
@@ -6,78 +7,56 @@ alias(
     visibility = ["@bzlmodrio-opencv//:__subpackages__"],
 )
 
-cc_library(
-    name = "shared_interface",
-    srcs = select({
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64//:shared_interface"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64debug//:shared_interface"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64//:shared_interface"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64debug//:shared_interface"],
-    }),
-    linkstatic = True,
-    tags = ["manual"],
-    visibility = ["@bzlmodrio-opencv//:__subpackages__"],
-    deps = ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers//:headers"],
-)
+[
+    [alias(
+        name = lib + extension,
+        actual = select({
+            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64debug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:osx": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversal//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:osx_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversaldebug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64debug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:windows_x86_64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64debug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64debug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32debug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathena//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenadebug//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcore//:" + lib + extension,
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcoredebug//:" + lib + extension,
+        }),
+        visibility = ["//visibility:public"],
+    ) for lib in opencv_libraries]
+    for extension in [
+        "_shared",
+        "_shared_import",
+    ]
+]
 
-filegroup(
-    name = "shared_raw",
-    srcs = select({
-        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64debug//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:osx": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversal//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:osx_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversaldebug//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64debug//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64//:shared"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64debug//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64debug//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32debug//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathena//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenadebug//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcore//:shared"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcoredebug//:shared"],
-        "//conditions:default": [],
+alias(
+    name = "opencv",
+    actual = select({
+        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64//:static",
+        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64debug//:static",
+        "@rules_bzlmodrio_toolchains//conditions:osx": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversal//:static",
+        "@rules_bzlmodrio_toolchains//conditions:osx_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversaldebug//:static",
+        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64//:static",
+        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64debug//:static",
+        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64//:static",
+        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64debug//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64debug//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32debug//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathena//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenadebug//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcore//:static",
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcoredebug//:static",
     }),
     visibility = ["@bzlmodrio-opencv//:__subpackages__"],
-)
-
-cc_library(
-    name = "shared",
-    srcs = [":shared_raw"],
-    visibility = ["@bzlmodrio-opencv//:__subpackages__"],
-    deps = [] + select({
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": [":shared_interface"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64": [":shared_interface"],
-        "//conditions:default": [],
-    }) + ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers//:headers"],
-    alwayslink = 1,
-)
-
-cc_library(
-    name = "static",
-    linkstatic = 1,
-    visibility = ["@bzlmodrio-opencv//:__subpackages__"],
-    deps = ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers//:headers"] + select({
-        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64static//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64staticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:osx": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversalstatic//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:osx_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversalstaticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64static//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64staticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64static//:static_libs"],
-        "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64staticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64static//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64staticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32static//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32staticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenastatic//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenastaticdebug//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcorestatic//:static_libs"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcorestaticdebug//:static_libs"],
-    }),
 )
 
 cc_library(
@@ -102,8 +81,7 @@ cc_library(
     }),
     linkstatic = 1,
     visibility = ["@bzlmodrio-opencv//:__subpackages__"],
-    deps = [
-        ":shared",
+    deps = [lib + "_shared_import" for lib in opencv_libraries] + [
         "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers//:headers",
     ],
 )

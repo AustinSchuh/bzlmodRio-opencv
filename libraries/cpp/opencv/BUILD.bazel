@@ -1,30 +1,12 @@
 alias(
-    name = "opencv",
-    actual = ":shared",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "header_files",
     actual = "@bzlmodrio-opencv//private/cpp/opencv:header_files",
     visibility = ["//visibility:public"],
 )
 
 alias(
-    name = "static",
-    actual = "@bzlmodrio-opencv//private/cpp/opencv:static",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "shared",
-    actual = "@bzlmodrio-opencv//private/cpp/opencv:shared",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "shared_raw",
-    actual = "@bzlmodrio-opencv//private/cpp/opencv:shared_raw",
+    name = "opencv",
+    actual = "@bzlmodrio-opencv//private/cpp/opencv",
     visibility = ["//visibility:public"],
 )
 
