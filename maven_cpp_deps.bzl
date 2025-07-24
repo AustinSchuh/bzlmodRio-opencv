@@ -90,10 +90,10 @@ def _update_integrity_attr(ctx, attrs, download_info):
     fail("sha256 required for", ctx.label)
 
 _download_and_generate_attrs = {
-    "url": attr.string(),
-    "sha256": attr.string(),
     "integrity": attr.string(),
+    "sha256": attr.string(),
     "static_repository_name": attr.string(),
+    "url": attr.string(),
 }
 
 def _download_and_generate_impl(rctx):
