@@ -5,12 +5,19 @@ local_path_override(
 )
 
 bazel_dep(name = "googletest", version = "1.14.0.bcr.1")
-bazel_dep(name = "rules_cc", version = "0.1.1")
-bazel_dep(name = "rules_java", version = "8.11.0")
+bazel_dep(name = "rules_cc", version = "0.1.4")
+bazel_dep(name = "rules_java", version = "8.12.0")
 bazel_dep(name = "rules_jvm_external", version = "6.3")
 bazel_dep(name = "rules_bazelrio", version = "0.0.14")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr4")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.12-7.bcr1")
+
+archive_override(
+    module_name = "rules_bzlmodrio_toolchains",
+    integrity = "sha256-nxPvrL/9FI5uzHUhQJEOpT9XWiscNirjVPf503jnlt8=",
+    strip_prefix = "rules_bzlmodrio_toolchains-45eace241218430150e96ba5c0e25bd9932ce7c4",
+    urls = ["https://github.com/AustinSchuh/rules_bzlmodRio_toolchains/archive/45eace241218430150e96ba5c0e25bd9932ce7c4.tar.gz"],
+)
 
 # TODO replace with released version once they make one that has Austins patch
 archive_override(
