@@ -41,7 +41,7 @@ http_archive(
 http_archive(
     name = "rules_bzlmodrio_toolchains",
     sha256 = "37780b3d3f30de72aaca12d9f80edc4216f6d708bed5b261c424d4dde49e8531",
-    url = "https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/releases/download/2025-1.bcr4/rules_bzlmodRio_toolchains-2025-1.bcr4.tar.gz",
+    url = "https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/releases/download/2025-1.bcr5/rules_bzlmodRio_toolchains-2025-1.bcr5.tar.gz",
 )
 
 ########################
