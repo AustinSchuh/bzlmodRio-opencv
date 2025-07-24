@@ -1,6 +1,6 @@
 module(
     name = "bzlmodrio-opencv",
-    version = "2025.4.10.0-3.bcr3",
+    version = "2025.4.10.0-3.bcr4",
     compatibility_level = 2025,
 )
 
