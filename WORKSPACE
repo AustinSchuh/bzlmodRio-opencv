@@ -5,10 +5,20 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 ########################
 # Download Dependencies
 ########################
+
+http_archive(
+    name = "bazel_features",
+    sha256 = "a015f3f2ebf4f1ac3f4ca8ea371610acb63e1903514fa8725272d381948d2747",
+    strip_prefix = "bazel_features-1.31.0",
+    url = "https://github.com/bazel-contrib/bazel_features/releases/download/v1.31.0/bazel_features-v1.31.0.tar.gz",
+)
+
 http_archive(
     name = "rules_java",
     sha256 = "d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877",
-    url = "https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz",
+    urls = [
+        "https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz",
+    ],
 )
 
 http_archive(
@@ -40,8 +50,8 @@ http_archive(
 
 http_archive(
     name = "rules_bzlmodrio_toolchains",
-    sha256 = "37780b3d3f30de72aaca12d9f80edc4216f6d708bed5b261c424d4dde49e8531",
-    url = "https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/releases/download/2025-1.bcr5/rules_bzlmodRio_toolchains-2025-1.bcr5.tar.gz",
+    sha256 = "b86f16f282a767bf73a341efcbd955613e4a20aa6f1fe7f229583af68e51acf8",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodrio_toolchains/releases/download/2025-1.bcr5/rules_bzlmodrio_toolchains-2025-1.bcr5.tar.gz"],
 )
 
 ########################
