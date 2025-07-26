@@ -20,6 +20,8 @@ opencv_libraries = [
 ]
 
 def cc_import_name(shared_library_file):
+    # We could see 'libfoo.so', 'libfoo.so.1.5', 'foo.dll', 'foo.dynlib', 'libfoo_java4100.so'
+    # We want 'foo' to be the answer for all of them.
     last_slash = shared_library_file.rfind("/")
     result = shared_library_file[last_slash + 1:]
 
