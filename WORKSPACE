@@ -13,7 +13,6 @@ http_archive(
     url = "https://github.com/bazel-contrib/bazel_features/releases/download/v1.31.0/bazel_features-v1.31.0.tar.gz",
 )
 
-
 http_archive(
     name = "rules_java",
     sha256 = "d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877",
