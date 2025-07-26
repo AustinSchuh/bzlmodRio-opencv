@@ -65,7 +65,7 @@ cc_library(
 
 filegroup(
     name = "jni",
-    srcs = shared_jni_srcs,
+    srcs = shared_jni_srcs + shared_srcs,
     visibility = ["@bzlmodrio-opencv//:__subpackages__"],
 )
 """
