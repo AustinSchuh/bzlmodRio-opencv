@@ -45,6 +45,13 @@ def cc_import_name(shared_library_file):
 
     result = result[:i + 1]
 
+    # Handle libfood.so.  opencv_java doesn't end with d.so ever, and
+    # opencv_features2d ends with 1 d always, and 2 sometimes.
+    if native.repository_name().endswith("debug") and result != "opencv_java":
+        if result[-1] != "d":
+            fail("Expected debug library version, got", result, shared_library_file)
+        result = result[:-1]
+
     if result not in opencv_libraries + ["opencv_java"]:
         fail("Unexpected opencv library %s", result)
 

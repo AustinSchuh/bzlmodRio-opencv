@@ -41,11 +41,11 @@ shared_srcs = glob([
         "**/*.so*",
         "**/*.dylib",
     ],
-    exclude=JNI_PATTERN + ["**/*.so.debug"],
+    exclude=JNI_PATTERN + ["**/*.so*.debug"],
     allow_empty = True,
 )
 
-shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so.debug"], allow_empty=True)
+shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so*.debug"], allow_empty=True)
 
 [ wrapped_cc_import(
     x,
