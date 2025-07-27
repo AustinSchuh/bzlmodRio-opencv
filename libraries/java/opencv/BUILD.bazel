@@ -1,4 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_import")
+load("@bzlmodrio-opencv//private/cpp/opencv:wrapped_cc_import.bzl", "opencv_libraries")
 
 java_import(
     name = "opencv",

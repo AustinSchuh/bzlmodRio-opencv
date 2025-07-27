@@ -50,7 +50,7 @@ shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so*.debug"], allow_empty=True
 [ wrapped_cc_import(
     x,
     "%static_name",
-    hdrs = ["@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers//:header_files"],
+    hdrs = ["@edu_wpi_opencv-cpp_headers//:header_files"],
     includes = ["."]
 ) for x in shared_srcs ]
 
@@ -58,7 +58,7 @@ shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so*.debug"], allow_empty=True
 cc_library(
     name = "static",
     deps = [":" + cc_import_name(x) for x in shared_srcs] + [
-        "@bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers//:headers",
+        "@edu_wpi_opencv-cpp_headers//:headers",
     ],
     visibility = ["//visibility:public"],
 )
@@ -142,8 +142,8 @@ def __static_shared_pair(mctx, name, shared_sha256, static_sha256):
 
     shared_url = "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-3/opencv-cpp-4.10.0-3-" + shared_name + ".zip"
     static_url = "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-3/opencv-cpp-4.10.0-3-" + static_name + ".zip"
-    static_repository_name = "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_" + static_name
-    shared_repository_name = "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_" + shared_name
+    static_repository_name = "edu_wpi_opencv-cpp_" + static_name
+    shared_repository_name = "edu_wpi_opencv-cpp_" + shared_name
     maybe(
         http_archive,
         static_repository_name,
@@ -162,14 +162,14 @@ def __static_shared_pair(mctx, name, shared_sha256, static_sha256):
 def __setup_bzlmodrio_opencv_cpp_dependencies(mctx):
     maybe(
         http_archive,
-        "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers",
+        "edu_wpi_opencv-cpp_headers",
         url = "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-3/opencv-cpp-4.10.0-3-headers.zip",
         sha256 = "b5b7c4a73300b71b96569a26041bc59702b6d4974e60725a569e2d50b140d65e",
         build_file_content = cc_library_headers,
     )
     maybe(
         http_archive,
-        "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_sources",
+        "edu_wpi_opencv-cpp_sources",
         url = "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-3/opencv-cpp-4.10.0-3-sources.zip",
         sha256 = "894d273ee8eece2e1f588aad8e7cf61f56a900279c864433984bd5299a31776c",
         build_file_content = cc_library_sources,
