@@ -33,7 +33,7 @@ def cc_import_name(shared_library_file):
         # Of course windows is special...
 
         # Handle foo4100d.dll.  opencv_java4100.dll doesn't end with d.so ever.
-        if not result.startswith("opencv_java"):
+        if native.repository_name().endswith("debug") and not result.startswith("opencv_java"):
             if result[-1] != "d":
                 fail("Expected debug library version, got", result, shared_library_file)
             result = result[:-1]
