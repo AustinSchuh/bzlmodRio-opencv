@@ -1,22 +1,22 @@
 load("@rules_bzlmodrio_toolchains//cc:cc_shared_import.bzl", "cc_shared_import")
 
 opencv_libraries = [
-    "opencv_aruco",
-    "opencv_calib3d",
-    "opencv_core",
-    "opencv_dnn",
-    "opencv_features2d",
-    "opencv_flann",
-    "opencv_gapi",
-    "opencv_highgui",
-    "opencv_imgcodecs",
-    "opencv_imgproc",
-    "opencv_ml",
-    "opencv_objdetect",
-    "opencv_photo",
-    "opencv_stitching",
-    "opencv_videoio",
-    "opencv_video",
+    "aruco",
+    "calib3d",
+    "core",
+    "dnn",
+    "features2d",
+    "flann",
+    "gapi",
+    "highgui",
+    "imgcodecs",
+    "imgproc",
+    "ml",
+    "objdetect",
+    "photo",
+    "stitching",
+    "videoio",
+    "video",
 ]
 
 def cc_import_name(shared_library_file):
@@ -70,9 +70,11 @@ def cc_import_name(shared_library_file):
                 fail("Expected debug library version, got", result, shared_library_file)
             result = result[:-1]
 
-    if result not in opencv_libraries + ["opencv_java"]:
+    result = result[7:]
+    if result not in opencv_libraries + ["java"]:
         fail("Unexpected opencv library %s", result)
 
+    # Now, strip off the opencv from the front to make the resulting paths shorter for windows.
     return result
 
 def wrapped_cc_import(
