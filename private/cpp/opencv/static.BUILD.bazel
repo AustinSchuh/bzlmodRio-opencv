@@ -1,8 +1,0 @@
-
-cc_library(
-    name = "static_libs",
-    srcs = glob(["**/*.lib", "**/*.a"], allow_empty=True),
-    visibility = ["//visibility:public"],
-    deps = [
-    ],
-)
