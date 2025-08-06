@@ -116,7 +116,9 @@ rules_shell_toolchains()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-maven_artifacts, maven_repositories = [], [
+maven_artifacts, maven_repositories = [
+    "edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-3",
+], [
     "https://repo1.maven.org/maven2",
     "https://frcmaven.wpi.edu/release",
 ]
