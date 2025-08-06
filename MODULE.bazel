@@ -61,8 +61,22 @@ use_repo(
     "edu_wpi_opencv-cpp_windowsx86staticdebug",
 )
 
-setup_bzlmodrio_opencv_java_dependencies = use_extension("//:maven_java_deps.bzl", "setup_bzlmodrio_opencv_java_dependencies")
-use_repo(
-    setup_bzlmodrio_opencv_java_dependencies,
-    "edu_wpi_first_thirdparty_frc2025_opencv_opencv_java",
+bazel_dep(name = "rules_jvm_external", version = "6.8")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-3",
+    ],
+    fetch_sources = True,
+    known_contributing_modules = [
+        "bzlmodrio-opencv",
+        "protobuf",
+    ],
+    lock_file = "//:maven_install.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+        "https://frcmaven.wpi.edu/artifactory/release/",
+    ],
 )
+use_repo(maven, "maven")
