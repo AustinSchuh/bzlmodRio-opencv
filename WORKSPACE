@@ -90,7 +90,6 @@ load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 rules_jvm_external_setup()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@rules_jvm_external//:specs.bzl", "maven")
 
 maven_artifacts, maven_repositories = [
     "edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-3",
