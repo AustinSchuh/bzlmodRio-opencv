@@ -101,7 +101,6 @@ maven_artifacts, maven_repositories = [
 maven_install(
     name = "maven",
     artifacts = maven_artifacts,
-    maven_install_json = "//:maven_install.json",
     repositories = maven_repositories,
 )
 
