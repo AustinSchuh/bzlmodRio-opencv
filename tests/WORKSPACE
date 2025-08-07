@@ -138,8 +138,8 @@ maven_artifacts += [
 maven_install(
     name = "maven",
     artifacts = maven_artifacts,
+    maven_install_json = "//:maven_install.json",
     repositories = maven_repositories,
-    # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
 
 http_archive(
