@@ -81,9 +81,19 @@ load("@bzlmodrio-opencv//private/non_bzlmod_dependencies:setup_dependencies.bzl"
 setup_dependencies()
 ########################
 
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
+
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-maven_artifacts, maven_repositories = [], [
+maven_artifacts, maven_repositories = [
+    "edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-3",
+], [
     "https://repo1.maven.org/maven2",
     "https://frcmaven.wpi.edu/release",
 ]
@@ -92,8 +102,11 @@ maven_install(
     name = "maven",
     artifacts = maven_artifacts,
     repositories = maven_repositories,
-    # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
+
+load("@maven//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()
 
 http_archive(
     name = "rules_bzlmodrio_jdk",
